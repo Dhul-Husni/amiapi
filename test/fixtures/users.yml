@@ -1,0 +1,16 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+dhul:
+  username: dhul
+  email: dhul.husni@gmail.com
+  password_digest: myPassword
+
+dan:
+  username: dan
+  email: dan@gmail.com
+  password_digest: twicePassword
+
+unreferred_user:
+  username: unreferred_user
+  email: unreferred_user@gmail.com
+  password_digest: unreferred_userPassword

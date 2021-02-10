@@ -1,13 +1,31 @@
+# frozen_string_literal: true
+
 ENV['RAILS_ENV'] ||= 'test'
-require_relative "../config/environment"
-require "rails/test_help"
+require 'rails/test_help'
+require 'minitest/rails'
+require 'webmock/minitest'
+
+require 'simplecov'
+SimpleCov.start 'rails'
+
+if ENV['CI'] == true
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
+end
+
+require 'minitest/reporters'
+Minitest::Reporters.use!
+
+require File.expand_path('../config/environment', __dir__)
+
+Minitest::Ci.clean = false
 
 class ActiveSupport::TestCase
-  # Run tests in parallel with specified workers
-  parallelize(workers: :number_of_processors)
+  include ActiveJob::TestHelper
 
-  # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
+  parallelize(workers: 1)
+
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+  WebMock.disable_net_connect! allow_localhost: true, net_http_connect_on_start: true
 end
