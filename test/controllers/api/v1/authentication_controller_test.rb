@@ -13,6 +13,7 @@ module Api
 
         auth_token = JSON.parse(response.body)[:auth_token]
         command = AuthorizeApiRequest.new(valid_headers(token: auth_token)).call
+
         assert command.successful?
         assert user, command.result
       end

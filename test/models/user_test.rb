@@ -3,9 +3,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # TODO: it has a unique email
-  # todo: has a secure password
-
   test 'it should validate presence of :username' do
     user = users(:dhul).dup
     user.email = 'new@gmail.com'
@@ -90,5 +87,20 @@ class UserTest < ActiveSupport::TestCase
     inviter.refer(user)
 
     assert user.rewards, 1
+  end
+
+  test '#total_rewarded_amount' do
+    user = users(:dhul)
+    assert_equal user.total_rewarded_amount, 10
+
+    Referral::SENT_REFERRALS_TARGET.times do |i|
+      invitee = users(:unreferred_user).dup
+      invitee.email = "new_user#{i}@random.com"
+      invitee.save
+
+      Referral.create(inviter: user, invitee: invitee)
+    end
+
+    assert_equal user.total_rewarded_amount, 20
   end
 end

@@ -4,13 +4,16 @@ dhul:
   username: dhul
   email: dhul.husni@gmail.com
   password_digest: $2a$12$zHOdVkQZwcVOUZq9ieKd1uDJAzx/xhpozZjjCa2djFeresmdrZ87. # dhul_password
+  referral_code: WH9IEMTZ
 
 dan:
   username: dan
   email: dan@gmail.com
   password_digest: $2a$12$G2Y0n3u3mqOSoUf80GVXBeoXra4d62l631YulYZb9X7ex7cR3LQLK # dan_password
+  referral_code: FRUKYCRM
 
 unreferred_user:
   username: unreferred_user
   email: unreferred_user@gmail.com
   password_digest: $2a$12$0.EZd82oCh6p4M4mm6LCD.PJRoQpP07eZ9DFe.OyN.iDH5wwF7b4u # unreferred_user_password
+  referral_code: 0J4MM27P
