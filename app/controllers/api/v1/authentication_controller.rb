@@ -11,7 +11,7 @@ module Api
         if command.successful?
           render(json: { auth_token: command.result })
         else
-          render(json: { error: command.errors }, status: :unauthorized)
+          render(json: { errors: command.errors.full_messages }, status: :unauthorized)
         end
       end
 

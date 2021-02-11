@@ -8,7 +8,9 @@ module Api
       extend ActiveSupport::Concern
 
       included do
-        rescue_from UnauthorizedError, with: -> { render json: { error: 'Unauthorized' }, status: :unauthorized } # todo: internationalization
+        rescue_from UnauthorizedError do
+          render json: { error: I18n.t('api.errors.unauthorized') }, status: :unauthorized
+        end
       end
 
       private

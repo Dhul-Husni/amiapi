@@ -1,6 +1,12 @@
 ---
 en:
+  activemodel:
+    errors:
+      models:
+        authenticate_user:
+          invalid_credentials: Invalid email or password
   api:
     errors:
       missing_required_param: A required param is missing
       not_found: Couldn't find the record
+      unauthorized: Unauthorized

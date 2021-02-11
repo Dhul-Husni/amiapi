@@ -15,10 +15,10 @@ class AuthenticateUser
   private
 
   def user
-    user = User.find_by!(email: @email)
+    user = User.find_by(email: @email)
     return user if user&.authenticate(@password)
 
-    errors.add(:user_authentication, 'Invalid Credentials') # todo: internationalization
+    errors.add(:base, :invalid_credentials) # todo: internationalization
     nil
   end
 end
