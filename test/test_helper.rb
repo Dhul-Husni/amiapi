@@ -20,12 +20,14 @@ require File.expand_path('../config/environment', __dir__)
 
 Minitest::Ci.clean = false
 
-class ActiveSupport::TestCase
-  include ActiveJob::TestHelper
+module ActiveSupport
+  class TestCase
+    include ActiveJob::TestHelper
 
-  parallelize(workers: 1)
+    parallelize(workers: 1)
 
-  fixtures :all
+    fixtures :all
 
-  WebMock.disable_net_connect! allow_localhost: true, net_http_connect_on_start: true
+    WebMock.disable_net_connect! allow_localhost: true, net_http_connect_on_start: true
+  end
 end

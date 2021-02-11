@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+signup_incentive:
+  reward_type: signup_incentive
+  amount: 10
+  user: dhul
+
+referrer_incentive:
+  reward_type: referrer_incentive
+  amount: 10
+  user: dan
