@@ -4,8 +4,52 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
   # TODO: it has a unique email
-  # todo: has unique username
   # todo: has a secure password
+
+  test 'it should validate presence of :username' do
+    user = users(:dhul).dup
+    user.username = nil
+    assert_not user.valid?
+
+    user.username = 'mike'
+    assert user.valid?
+  end
+
+  test 'it should validate presence of :username length' do
+    user = users(:dhul).dup
+    user.username = 'o'
+    assert_not user.valid?
+
+    user.username = 'mike'
+    assert user.valid?
+  end
+
+  test 'it should validate presence of :email' do
+    user = users(:dhul).dup
+    user.email = nil
+    assert_not user.valid?
+
+    user.email = 'mike@gmail.com'
+    assert user.valid?
+  end
+
+  test 'it should validate format of :email' do
+    # user = users(:dhul).dup
+    # user.email = nil
+    # assert_not user.valid?
+
+    # user.email = 'mike@gmail.com'
+    # assert user.valid?
+  end
+
+  test 'it should validate presence of :password_digest' do
+    user = users(:dhul).dup
+    user.password_digest = nil
+    assert_not user.valid?
+
+    user.password_digest = 'randomEncryption'
+    assert user.valid?
+  end
 
   test '#refer' do
     user = users(:dhul)
