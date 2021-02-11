@@ -20,9 +20,12 @@ require File.expand_path('../config/environment', __dir__)
 
 Minitest::Ci.clean = false
 
+Dir[Rails.root.join('test/support/**/*.rb')].sort.each { |f| require f }
+
 module ActiveSupport
   class TestCase
     include ActiveJob::TestHelper
+    include AuthorizationHelper
 
     parallelize(workers: 1)
 

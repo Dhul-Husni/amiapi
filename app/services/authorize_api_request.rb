@@ -16,7 +16,7 @@ class AuthorizeApiRequest
   private
 
   def user
-    @user ||= User.find(decoded_auth_token[:user_id]) if decoded_auth_token
+    @user ||= User.find_by(id: decoded_auth_token.try(:[], :user_id)) if decoded_auth_token
   end
 
   def decoded_auth_token

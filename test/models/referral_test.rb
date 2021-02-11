@@ -42,7 +42,7 @@ class ReferralTest < ActiveSupport::TestCase
 
     Referral::SENT_REFERRALS_TARGET.times do |i|
       invitee = users(:unreferred_user).dup
-      invitee.username = "new_user#{i}"
+      invitee.email = "new_user#{i}@random.com"
       invitee.save
 
       Referral.create(inviter: inviter, invitee: invitee)
