@@ -10,10 +10,13 @@ class Referral < ApplicationRecord
 
   REFERRAL_SIGN_UP_REWARD = 10 # dollars
   REFERRER_REWARD = 10
+  SENT_REFERRALS_TARGET = 5
 
   private
 
   def reward_inviter
+    return unless eligible_for_referrer_reward?(inviter)
+
     reward = Reward.referrer_incentives.new(
       amount: REFERRER_REWARD,
     )
@@ -27,5 +30,10 @@ class Referral < ApplicationRecord
     )
 
     invitee.rewards << reward
+  end
+
+  # eligible for reward everytime they hit the target
+  def eligible_for_referrer_reward?(user)
+    user.sent_referrals.size % SENT_REFERRALS_TARGET == 0
   end
 end
