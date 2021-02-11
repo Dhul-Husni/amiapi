@@ -43,15 +43,6 @@ class UserTest < ActiveSupport::TestCase
     assert user.valid?
   end
 
-  test 'it should validate format of :email' do
-    # user = users(:dhul).dup
-    # user.email = nil
-    # assert_not user.valid?
-
-    # user.email = 'mike@gmail.com'
-    # assert user.valid?
-  end
-
   test 'it should validate presence of :password_digest' do
     user = users(:dhul).dup
     user.email = 'new@gmail.com'

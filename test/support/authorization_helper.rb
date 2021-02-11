@@ -5,9 +5,9 @@ module AuthorizationHelper
     JsonWebToken.encode(user_id: user_id)
   end
 
-  def valid_headers
+  def valid_headers(token: token_generator(user.id))
     {
-      'Authorization' => token_generator(user.id),
+      'Authorization' => token,
       'Content-Type' => 'application/json',
     }
   end
