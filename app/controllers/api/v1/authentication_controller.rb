@@ -3,7 +3,7 @@
 module Api
   module V1
     class AuthenticationController < ApiController
-      skip_before_action :authenticate_user!
+      skip_before_action :authenticate_request!
 
       def login
         command = AuthenticateUser.call(user_params[:email], user_params[:password])

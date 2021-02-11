@@ -4,7 +4,7 @@ module Api
   module V1
     class ApiController < ActionController::API
       include Api::Concerns::JwtAuthenticatable
-      before_action :authenticate_user!, except: :status
+      before_action :authenticate_request!, except: :status
 
       rescue_from ActiveRecord::RecordNotFound,        with: :render_not_found
       rescue_from ActiveRecord::RecordInvalid,         with: :render_record_invalid

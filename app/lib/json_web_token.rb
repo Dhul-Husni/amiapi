@@ -9,7 +9,7 @@ class JsonWebToken
   end
 
   def self.decode(token)
-    body = JWT.decode(token, true, { algorithm: ALGORITHM }).first
+    body = JWT.decode(token, HMAC_SECRET, true, { algorithm: ALGORITHM }).first
 
     body.with_indifferent_access
   rescue *JWT_ERRORS => e
