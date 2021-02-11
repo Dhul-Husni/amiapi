@@ -11,6 +11,19 @@ class ReferralTest < ActiveSupport::TestCase
     assert referral.valid?
   end
 
+  test 'it does not reward users who have already been invited' do
+    inviter = users(:dhul)
+    invitee = users(:unreferred_user)
+
+    assert_not Reward.signup_incentives.find_by(user: invitee)
+
+    Referral.create(inviter: inviter, invitee: invitee)
+    assert Reward.signup_incentives.where(user: invitee).size, 1
+
+    Referral.create(inviter: inviter, invitee: invitee)
+    assert Reward.signup_incentives.where(user: invitee).size, 1
+  end
+
   test 'it does not rewards inviters who have not reached the target referrals' do
     inviter = users(:dhul)
     invitee = users(:unreferred_user)
@@ -18,7 +31,6 @@ class ReferralTest < ActiveSupport::TestCase
     assert_not Reward.referrer_incentives.find_by(user: inviter)
 
     Referral.create(inviter: inviter, invitee: invitee)
-
     assert_not Reward.referrer_incentives.find_by(user: inviter)
   end
 
@@ -46,7 +58,6 @@ class ReferralTest < ActiveSupport::TestCase
     assert_not Reward.signup_incentives.find_by(user: invitee)
 
     Referral.create(inviter: inviter, invitee: invitee)
-
     assert Reward.signup_incentives.find_by(user: invitee)
   end
 end
