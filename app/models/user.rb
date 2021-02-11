@@ -12,12 +12,21 @@ class User < ApplicationRecord
                               inverse_of: :invitee, dependent: :destroy
   has_one :inviter, through: :received_referral, source: :inviter
 
+  before_validation :downcase_email
+
   validates :username, :email, :password_digest, presence: true
-  validates :email, uniqueness: true, case_sensitive: false
+  validates :email, uniqueness: true
+  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :username, length: { minimum: 3 }
 
   def refer(user)
     referral = Referral.new(inviter: self, invitee: user)
     sent_referrals << referral
+  end
+
+  private
+
+  def downcase_email
+    self.email = email.downcase if email.present?
   end
 end
