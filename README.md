@@ -1,3 +1,4 @@
+[![Maintainability](https://api.codeclimate.com/v1/badges/d2da46e3ebbf5a4fbe80/maintainability)](https://codeclimate.com/github/Dhul-Husni/amiapi/maintainability)
 # Introduction
 
 Boost user conversions with AmiApi. Incentivise users with referral bonuses users and rewards on signup.
