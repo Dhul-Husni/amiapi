@@ -38,6 +38,18 @@ module Api
         new_user = User.find_by(email: 'cat@gmail.com')
         assert_nil new_user
       end
+
+      test '#show' do
+        user = users(:dhul)
+        auth_token = auth_token_generator(users(:dan).id)
+
+        @request.headers['Authorization'] = "Bearer #{auth_token}"
+        get :show, params: { id: user.id }
+
+        assert_response :success
+        json_response = JSON.parse(response.body).with_indifferent_access
+        assert_equal json_response[:id], user.id
+      end
     end
   end
 end

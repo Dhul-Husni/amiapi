@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       get :status, to: 'api#status'
       post 'login', to: 'authentication#login'
       post 'signup', to: 'users#create'
+
+      resources :users, only: :show
     end
   end
 end

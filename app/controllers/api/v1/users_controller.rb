@@ -5,6 +5,8 @@ module Api
     class UsersController < ApiController
       skip_before_action :authenticate_request!, only: :create
 
+      before_action :set_user, except: :create
+
       def create
         user = User.create!(user_params)
 
@@ -14,7 +16,15 @@ module Api
         render json: user, serializer: Api::V1::UserSerializer, status: :created
       end
 
+      def show
+        render json: @user, serializer: Api::V1::UserSerializer, status: :ok
+      end
+
       private
+
+      def set_user
+        @user = User.find(params[:id])
+      end
 
       def user_params
         params.permit(:username, :email, :password)
