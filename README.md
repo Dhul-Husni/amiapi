@@ -56,7 +56,7 @@ rbenv install 2.6.3
 
 ### Install dependencies
 
-Using [Bundler](https://github.com/bundler/bundler) and [Yarn](https://github.com/yarnpkg/yarn):
+Using [Bundler](https://github.com/bundler/bundler):
 
 ```shell
 bundle install
