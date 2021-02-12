@@ -1,7 +1,7 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/d2da46e3ebbf5a4fbe80/maintainability)](https://codeclimate.com/github/Dhul-Husni/amiapi/maintainability)
 # Introduction
 
-Boost user conversions with AmiApi. Incentivise users with referral bonuses users and rewards on signup.
+Boost user conversions with AmiApi. Incentivise users with referral bonuses and rewards on signup.
 
 These docs describe how to use the AmiApi API. We hope you enjoy these docs, and please don't hesitate to [file an issue](https://github.com/dhul-husni/amiapi/issues/new) if you see anything missing.
 
@@ -29,7 +29,7 @@ Open endpoints require no Authentication
 ### Endpoints that require Authentication
 Closed endpoints require a valid JWT token to be included in the header of the request with the format ```Authorization: Bearer <token>```. A JWT token can be acquired from the Login view above.
 
-- [Show User Info](docs/api/v1/user/get.md): `GET /api/v1/users/:id or GET /api/v1/users/:referral_code`
+- [Show User Info](docs/api/v1/users/show.md): `GET /api/v1/users/:id or GET /api/v1/users/:referral_code`
 
 ## Getting Started
 
