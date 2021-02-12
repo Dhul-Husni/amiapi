@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  extend FriendlyId
+  friendly_id :referral_code
+
   has_secure_password
 
   has_many :sent_referrals, class_name: 'Referral', foreign_key: :inviter_id,

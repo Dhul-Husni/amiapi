@@ -18,7 +18,7 @@ class AuthenticateUser
     user = User.find_by(email: @email)
     return user if user&.authenticate(@password)
 
-    errors.add(:base, :invalid_credentials) # todo: internationalization
+    errors.add(:base, :invalid_credentials)
     nil
   end
 end
