@@ -6,6 +6,8 @@ en:
         authenticate_user:
           invalid_credentials: Invalid email or password
   api:
+    messages:
+      user_created: Successfully created new user
     errors:
       missing_required_param: A required param is missing
       not_found: Couldn't find the record
