@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2021_02_11_224159) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "referrals", force: :cascade do |t|
     t.integer "inviter_id", null: false
     t.integer "invitee_id", null: false
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 2021_02_11_224159) do
 
   create_table "rewards", force: :cascade do |t|
     t.string "reward_type", null: false
-    t.integer "user_id", null: false
+    t.bigint "user_id", null: false
     t.decimal "amount", precision: 8, scale: 2, default: "0.0", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -39,7 +42,6 @@ ActiveRecord::Schema.define(version: 2021_02_11_224159) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "referral_code", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["referral_code"], name: "index_users_on_referral_code", unique: true
   end
 
 end

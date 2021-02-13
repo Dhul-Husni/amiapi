@@ -3,17 +3,17 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.7.2'
 
 gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'
 gem 'bootsnap', '>= 1.4.4', require: false
 gem 'friendly_id', '~> 5.4.0'
 gem 'jwt'
+gem 'pg'
 gem 'puma', '~> 5.0'
 gem 'rails', '~> 6.1.1'
 gem 'simple_command'
-gem 'sqlite3', '~> 1.4'
 
 # static code analyzer
 gem 'rubocop', '~> 0.92.0', require: false

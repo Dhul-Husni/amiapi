@@ -47,12 +47,12 @@ cd amiapi
 ruby -v
 ```
 
-The output should be `ruby 2.6.3`
+The output should be `ruby 2.7.2`
 
 If not, install the right ruby version using [rbenv](https://github.com/rbenv/rbenv) (it could take a while):
 
 ```shell
-rbenv install 2.6.3
+rbenv install 2.7.2
 ```
 
 ### Install dependencies
@@ -64,6 +64,11 @@ bundle install
 ```
 
 ### Initialize the database
+```shell
+cp config/database.yml.example config/database.yml
+```
+
+Remember to configure `config/database.yml` by replacing the `username` and `password` to your local database user's credentials
 
 ```shell
 rails db:create db:migrate db:seed

@@ -128,6 +128,7 @@ GEM
     parallel (1.20.1)
     parser (2.7.2.0)
       ast (~> 2.4.1)
+    pg (1.2.3)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -206,7 +207,6 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sqlite3 (1.4.2)
     thor (1.1.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
@@ -234,6 +234,7 @@ DEPENDENCIES
   minitest-ci
   minitest-rails
   minitest-reporters
+  pg
   pry
   puma (~> 5.0)
   rails (~> 6.1.1)
@@ -244,12 +245,11 @@ DEPENDENCIES
   simple_command
   simplecov
   spring
-  sqlite3 (~> 1.4)
   tzinfo-data
   webmock
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.7.2p137
 
 BUNDLED WITH
    2.1.4
