@@ -8,6 +8,10 @@ Rails.application.routes.draw do
       post 'signup', to: 'users#create'
 
       resources :users, only: :show
+
+      resource :user, only: [] do
+        get :profile, on: :member
+      end
     end
   end
 end

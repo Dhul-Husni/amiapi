@@ -5,7 +5,7 @@ module Api
     class UsersController < ApiController
       skip_before_action :authenticate_request!, only: :create
 
-      before_action :set_user, except: :create
+      before_action :set_user, except: %i[create profile]
 
       def create
         user = User.create!(user_params)
@@ -18,6 +18,10 @@ module Api
 
       def show
         render json: @user, serializer: Api::V1::UserSerializer, status: :ok
+      end
+
+      def profile
+        render json: current_user, serializer: Api::V1::UserSerializer, status: :ok
       end
 
       private

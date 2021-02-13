@@ -29,7 +29,8 @@ Open endpoints require no Authentication
 ### Endpoints that require Authentication
 Closed endpoints require a valid JWT token to be included in the header of the request with the format ```Authorization: Bearer <token>```. A JWT token can be acquired from the Login view above.
 
-- [Show User Info](docs/api/v1/users/show.md): `GET /api/v1/users/:id or GET /api/v1/users/:referral_code`
+- [Retrieve a user](docs/api/v1/users/show.md): `GET /api/v1/users/:id or GET /api/v1/users/:referral_code`
+- [Show current logged in user's profile](docs/api/v1/user/profile.md): `GET /api/v1/user/profile`
 
 ## Getting Started
 

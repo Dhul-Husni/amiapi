@@ -41,10 +41,20 @@ module Api
 
       test '#show' do
         user = users(:dhul)
-        auth_token = auth_token_generator(users(:dan).id)
 
-        @request.headers['Authorization'] = "Bearer #{auth_token}"
+        signin(users(:dan))
         get :show, params: { id: user.id }
+
+        assert_response :success
+        json_response = JSON.parse(response.body).with_indifferent_access
+        assert_equal json_response[:id], user.id
+      end
+
+      test '#profile' do
+        user = users(:dhul)
+
+        signin(user)
+        get :profile
 
         assert_response :success
         json_response = JSON.parse(response.body).with_indifferent_access
@@ -53,9 +63,8 @@ module Api
 
       test 'can fetch a user by referral_code' do
         user = users(:dhul)
-        auth_token = auth_token_generator(users(:dan).id)
 
-        @request.headers['Authorization'] = "Bearer #{auth_token}"
+        signin(users(:dan))
         get :show, params: { id: user.referral_code }
 
         assert_response :success

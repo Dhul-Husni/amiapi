@@ -1,8 +1,8 @@
-# Retrieve User
+# Show Current Logged In User
 
-Get the details of a user by `id` or `:referral_code`.
+Get the details of the current logged in user.
 
-**URL** : `/api/v1/users/:id`, `/api/v1/users/:referral_code`
+**URL** : `/api/v1/user/profile`
 
 **Method** : `GET`
 
@@ -28,21 +28,3 @@ User is retrieved.
     "referral_link": "/api/v1/signup?referral_code=VE1XLOX-"
 }
 ```
-
-## Error Response
-
-**Condition** : If the user is not found.
-
-**Code** : `404 NOT FOUND`
-
-**Content** :
-
-```json
-{
-    "error": "Couldn't find the record"
-}
-```
-
-## Notes
-
-* A user can be retrieved by either their `:referral_code` or `:id`.
