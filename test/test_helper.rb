@@ -8,7 +8,7 @@ require 'rails/test_help'
 require 'minitest/rails'
 require 'webmock/minitest'
 
-if ENV['CI'] == true
+if ENV['CI'] == 'true'
   require 'codecov'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end

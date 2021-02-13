@@ -1,54 +1,87 @@
+version: 2.1
+
+orbs:
+  ruby: circleci/ruby@1.1.2
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: cimg/ruby:2.7.2
+      environment:
+        PGHOST: 127.0.0.1
+        PGUSER: postgres
+        RAILS_ENV: test
+        CI: 'true'
+    - image: circleci/postgres:9.5-alpine
+      environment:
+        POSTGRES_USER: postgres
+        POSTGRES_DB: amiapi_test
+        POSTGRES_PASSWORD: ""
 jobs:
   build:
-    docker:
-      - image: 'cimg/ruby:2.7.2'
+    <<: *defaults
     steps:
       - checkout
       - ruby/install-deps
-  checking:
-    docker:
-      - image: 'cimg/ruby:2.7.2'
-    steps:
-      - checkout
-      - ruby/install-deps
-      - ruby/rubocop-check:
-          format: progress
-          label: Inspecting with Rubocop
+      - run:
+          name:  Download cc-test-reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
   test:
-    docker:
-      - image: 'cimg/ruby:2.7.2'
-      - environment:
-          POSTGRES_DB: amiapi_test
-          POSTGRES_PASSWORD: ''
-          POSTGRES_USER: postgres
-        image: 'circleci/postgres:9.5-alpine'
-    environment:
-      BUNDLE_JOBS: '3'
-      BUNDLE_RETRY: '3'
-      PGHOST: 127.0.0.1
-      PGPASSWORD: ''
-      PGUSER: postgres
-      RAILS_ENV: test
-    parallelism: 1
+    <<: *defaults
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
       - ruby/install-deps
       - run:
-          command: 'dockerize -wait tcp://localhost:5432 -timeout 1m'
-          name: Wait for DB
+          name: wait for database
+          command: dockerize -wait tcp://localhost:5432 -timeout 1m
       - run:
-          command: 'bundle exec rails db:schema:load --trace'
-          name: Database setup
+          name: setup database
+          command: |
+            bundle exec rake db:create
+            bundle exec rake db:schema:load
+      # - run:
+      #     name: run unit tests
+      #     command: bundle exec rails test
       - run:
-        command: bin/rails test
-orbs:
-  ruby: circleci/ruby@x.y
-version: 2.1
+          name: Run tests
+          command: |
+            bundle exec rake
+            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.test.json coverage/test/.resultset.json
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - codeclimate.test.json
+
+  upload-coverage:
+    <<: *defaults
+    environment:
+      CC_TEST_REPORTER_ID: 062a963965d6a7c348bb7a84158e15d973c2ba55eff1a7214d9bd149a471040f
+    steps:
+      - attach_workspace:
+          at: ~/repo/tmp
+      - run:
+          name: Upload coverage results to Code Climate
+          command: |
+            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+
 workflows:
-  build_and_test:
+  version: 2
+  commit:
     jobs:
       - build
-      - checking
       - test:
           requires:
             - build
+      - upload-coverage:
+          requires:
+             - test
