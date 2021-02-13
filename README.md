@@ -5,6 +5,7 @@ Boost user conversions with AmiApi. Incentivise users with referral bonuses and 
 
 These docs describe how to use the AmiApi API. We hope you enjoy these docs, and please don't hesitate to [file an issue](https://github.com/dhul-husni/amiapi/issues/new) if you see anything missing.
 
+Demo api running at: [AmiApi](https://amiapi.herokuapp.com/api/v1/status)
 ## Outline
 - [API Documentation](#api-documentation)
     + [Open Endpoints](#open-endpoints)
