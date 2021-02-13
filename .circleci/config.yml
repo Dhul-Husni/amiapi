@@ -18,28 +18,12 @@ defaults: &defaults
         POSTGRES_USER: postgres
         POSTGRES_DB: amiapi_test
         POSTGRES_PASSWORD: ""
+
 jobs:
   build:
     <<: *defaults
     steps:
       - checkout
-      - ruby/install-deps
-      - run:
-          name:  Download cc-test-reporter
-          command: |
-            mkdir -p tmp/
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
-            chmod +x ./tmp/cc-test-reporter
-      - persist_to_workspace:
-          root: tmp
-          paths:
-            - cc-test-reporter
-  test:
-    <<: *defaults
-    steps:
-      - checkout
-      - attach_workspace:
-          at: ~/repo/tmp
       - ruby/install-deps
       - run:
           name: wait for database
@@ -52,32 +36,4 @@ jobs:
       - run:
           name: Run tests
           command: |
-            bundle exec rake
-            ./tmp/cc-test-reporter format-coverage -t simplecov -o tmp/codeclimate.test.json coverage/test/.resultset.json
-      - persist_to_workspace:
-          root: tmp
-          paths:
-            - codeclimate.test.json
-
-  upload-coverage:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/repo/tmp
-      - run:
-          name: Upload coverage results to Code Climate
-          command: |
-            ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
-            ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
-
-workflows:
-  version: 2
-  commit:
-    jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - upload-coverage:
-          requires:
-             - test
+            bundle exec rails test
