@@ -12,6 +12,7 @@ defaults: &defaults
         PGUSER: postgres
         RAILS_ENV: test
         CI: 'true'
+        CC_TEST_REPORTER_ID: 062a963965d6a7c348bb7a84158e15d973c2ba55eff1a7214d9bd149a471040f
     - image: circleci/postgres:9.5-alpine
       environment:
         POSTGRES_USER: postgres
@@ -48,9 +49,6 @@ jobs:
           command: |
             bundle exec rake db:create
             bundle exec rake db:schema:load
-      # - run:
-      #     name: run unit tests
-      #     command: bundle exec rails test
       - run:
           name: Run tests
           command: |
@@ -63,8 +61,6 @@ jobs:
 
   upload-coverage:
     <<: *defaults
-    environment:
-      CC_TEST_REPORTER_ID: 062a963965d6a7c348bb7a84158e15d973c2ba55eff1a7214d9bd149a471040f
     steps:
       - attach_workspace:
           at: ~/repo/tmp
